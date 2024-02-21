@@ -34,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                 Column(
                   children: [
                     const EmailAndPassword(
-                      isSignUppPage: true,
+                      isSignUpPage: true,
                     ),
                     Gap(114.h),
                     const TermsAndConditionsText(),
