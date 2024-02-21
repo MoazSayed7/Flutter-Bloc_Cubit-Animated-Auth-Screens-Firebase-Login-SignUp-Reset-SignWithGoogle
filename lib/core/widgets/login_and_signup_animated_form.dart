@@ -16,8 +16,8 @@ import 'app_text_form_field.dart';
 import 'password_validations.dart';
 
 class EmailAndPassword extends StatefulWidget {
-  final bool? isSignUppPage;
-  const EmailAndPassword({super.key, this.isSignUppPage});
+  final bool? isSignUpPage;
+  const EmailAndPassword({super.key, this.isSignUpPage});
 
   @override
   State<EmailAndPassword> createState() => _EmailAndPasswordState();
@@ -181,18 +181,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           passwordField(),
           Gap(18.h),
           passwordConfirmationField(),
-          TextButton(
-            onPressed: () {
-              context.pushNamed(Routes.forgetScreen);
-            },
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'forget password?',
-                style: TextStyles.font14Blue400Weight,
-              ),
-            ),
-          ),
+          forgetPasswordTextButton(context),
           Gap(5.h),
           PasswordValidations(
             hasLowerCase: hasLowercase,
@@ -208,8 +197,27 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     );
   }
 
+  Widget forgetPasswordTextButton(BuildContext context) {
+    if (widget.isSignUpPage == null) {
+      return TextButton(
+        onPressed: () {
+          context.pushNamed(Routes.forgetScreen);
+        },
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'forget password?',
+            style: TextStyles.font14Blue400Weight,
+          ),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  }
+
   Widget loginOrSignUpButton(BuildContext context) {
-    if (widget.isSignUppPage == null) {
+    if (widget.isSignUpPage == null) {
       return loginButton(context);
     } else {
       return signUpButton(context);
@@ -413,7 +421,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   }
 
   Widget passwordConfirmationField() {
-    if (widget.isSignUppPage == null) {
+    if (widget.isSignUpPage == null) {
       return const SizedBox.shrink();
     }
     return AppTextFormField(
