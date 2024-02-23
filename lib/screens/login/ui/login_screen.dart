@@ -1,14 +1,13 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:signup_rest_login/core/widgets/login_with_google.dart';
+import 'package:signup_rest_login/helpers/build_divider.dart';
+import 'package:signup_rest_login/helpers/google_sign_in.dart';
 
 import '../../../core/widgets/login_and_signup_animated_form.dart';
 import '../../../core/widgets/terms_and_conditions_text.dart';
-import '../../../theming/colors.dart';
 import '../../../theming/styles.dart';
 import 'widgets/do_not_have_account.dart';
 
@@ -52,16 +51,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const EmailAndPassword(),
                 Gap(10.h),
+                const LoginWithGoogle(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    buildDivider(),
+                    BuildDivider.buildDivider(),
                     Gap(5.w),
-                    Text('or Sign in with',
-                        style: TextStyles.font13Grey400Weight),
+                    Text(
+                      'or Sign in with',
+                      style: TextStyles.font13Grey400Weight,
+                    ),
                     Gap(5.w),
-                    buildDivider(),
+                    BuildDivider.buildDivider(),
                   ],
                 ),
                 Gap(5.h),
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     IconButton(
                       icon: const FaIcon(FontAwesomeIcons.google),
                       onPressed: () async {
-                        await signInWithGoogle();
+                        await await GoogleSignin.signInWithGoogle(context);
                       },
                     ),
                   ],
@@ -85,39 +87,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Container buildDivider() {
-    return Container(
-      width: 90.w,
-      height: 2.h,
-      decoration: ShapeDecoration(
-        color: ColorsManager.gray,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100),
-        ),
-      ),
-    );
-  }
-
-  Future signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) {
-      return;
-    }
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    if (!mounted) return;
-    AwesomeDialog(context: context);
   }
 }
