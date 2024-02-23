@@ -10,11 +10,19 @@ import '../../../helpers/app_regex.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
 import '../../helpers/extensions.dart';
-import '/screens/login/ui/widgets/animation_enum.dart';
 import 'app_text_button.dart';
 import 'app_text_form_field.dart';
 import 'password_validations.dart';
 
+enum Animations {
+  idle,
+  Hands_up,
+  hands_down,
+  success,
+  fail,
+  Look_down_right,
+  Look_down_left,
+}
 class EmailAndPassword extends StatefulWidget {
   final bool? isSignUpPage;
   const EmailAndPassword({super.key, this.isSignUpPage});
@@ -22,6 +30,7 @@ class EmailAndPassword extends StatefulWidget {
   @override
   State<EmailAndPassword> createState() => _EmailAndPasswordState();
 }
+
 
 class _EmailAndPasswordState extends State<EmailAndPassword> {
   bool isObscureText = true;
@@ -126,14 +135,14 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   void initState() {
-    controllerIdle = SimpleAnimation(Animatations.idle.name);
-    controllerHandsUp = SimpleAnimation(Animatations.Hands_up.name);
-    controllerHandsDown = SimpleAnimation(Animatations.hands_down.name);
-    controllerSuccess = SimpleAnimation(Animatations.success.name);
-    controllerFail = SimpleAnimation(Animatations.fail.name);
+    controllerIdle = SimpleAnimation(Animations.idle.name);
+    controllerHandsUp = SimpleAnimation(Animations.Hands_up.name);
+    controllerHandsDown = SimpleAnimation(Animations.hands_down.name);
+    controllerSuccess = SimpleAnimation(Animations.success.name);
+    controllerFail = SimpleAnimation(Animations.fail.name);
     controllerLookDownRight =
-        SimpleAnimation(Animatations.Look_down_right.name);
-    controllerLookDownLeft = SimpleAnimation(Animatations.Look_down_left.name);
+        SimpleAnimation(Animations.Look_down_right.name);
+    controllerLookDownLeft = SimpleAnimation(Animations.Look_down_left.name);
     rootBundle.load('assets/login_animation.riv').then((data) {
       final file = RiveFile.import(data);
       final artboard = file.mainArtboard;
@@ -212,7 +221,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         ),
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 
