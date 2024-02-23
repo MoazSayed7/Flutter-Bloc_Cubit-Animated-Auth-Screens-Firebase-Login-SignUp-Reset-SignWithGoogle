@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:signup_rest_login/core/widgets/login_with_google.dart';
-import 'package:signup_rest_login/helpers/build_divider.dart';
-import 'package:signup_rest_login/helpers/google_sign_in.dart';
+import '../../../core/widgets/sign_in_with_google_text.dart';
+import '../../../helpers/google_sign_in.dart';
 
 import '../../../core/widgets/login_and_signup_animated_form.dart';
 import '../../../core/widgets/terms_and_conditions_text.dart';
@@ -51,21 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const EmailAndPassword(),
                 Gap(10.h),
-                const LoginWithGoogle(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    BuildDivider.buildDivider(),
-                    Gap(5.w),
-                    Text(
-                      'or Sign in with',
-                      style: TextStyles.font13Grey400Weight,
-                    ),
-                    Gap(5.w),
-                    BuildDivider.buildDivider(),
-                  ],
-                ),
+                const SigninWithGoogleText(),
                 Gap(5.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
