@@ -5,8 +5,8 @@ import 'package:gap/gap.dart';
 import '../../theming/styles.dart';
 import '../../helpers/build_divider.dart';
 
-class LoginWithGoogle extends StatelessWidget {
-  const LoginWithGoogle({
+class SigninWithGoogleText extends StatelessWidget {
+  const SigninWithGoogleText({
     super.key,
   });
 
