@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+// import the configuration file you generated using Firebase CLI
 import 'firebase_options.dart';
 import 'routing/app_router.dart';
 import 'routing/routes.dart';
