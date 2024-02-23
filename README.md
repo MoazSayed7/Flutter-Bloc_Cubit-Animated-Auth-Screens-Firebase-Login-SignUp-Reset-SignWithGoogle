@@ -1,5 +1,6 @@
 # Flutter Animated Login & Signup with Firebase Authentication
-# Login Screen
+App Demo
+## Login Screen
 <HTML>
     <body>
         <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/031cd2c6-4365-4ba1-87c8-8ce952cecd9a" alt="drawing" style="width:200px;"/>
@@ -9,7 +10,7 @@
     </body>
 </HTML>
 
-# SignUp Screen
+## SignUp Screen
 <HTML>
     <body>
         <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/ae606354-0034-44c9-b8b7-dbe70c06438c" alt="drawing" style="width:200px;height:400px"/>
@@ -18,14 +19,14 @@
     </body>
 </HTML>
 
-# Reset Password Screen
+## Reset Password Screen
 <HTML>
     <body>
         <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/b7a7c732-6e18-419c-92fb-718e64869dc9" alt="drawing" style="width:200px;"/>
     </body>
 </HTML>
 
-# Home Screen
+## Home Screen
 <HTML>
     <body>
         <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/9a3ed6ca-ec03-4a96-89b6-a02d537afbf6" alt="drawing" style="width:200px;"/>
