@@ -35,6 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
+  flutter_offline: ^3.0.1
   font_awesome_flutter: ^10.7.0
   gap: ^3.0.1
   google_sign_in: ^6.2.1
