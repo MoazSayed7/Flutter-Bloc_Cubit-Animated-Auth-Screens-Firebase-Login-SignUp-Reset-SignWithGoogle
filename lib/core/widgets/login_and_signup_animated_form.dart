@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rive/rive.dart';
 
 import '../../../helpers/app_regex.dart';
@@ -23,22 +25,35 @@ enum Animations {
   Look_down_right,
   Look_down_left,
 }
+
+// ignore: must_be_immutable
 class EmailAndPassword extends StatefulWidget {
   final bool? isSignUpPage;
-  const EmailAndPassword({super.key, this.isSignUpPage});
+  final bool? isPasswordPage;
+  late GoogleSignInAccount? googleUser;
+  late OAuthCredential? credential;
+  EmailAndPassword({
+    super.key,
+    this.isSignUpPage,
+    this.isPasswordPage,
+    this.googleUser,
+    this.credential,
+  });
 
   @override
   State<EmailAndPassword> createState() => _EmailAndPasswordState();
 }
 
-
 class _EmailAndPasswordState extends State<EmailAndPassword> {
   bool isObscureText = true;
   bool hasLowercase = false;
   bool hasUppercase = false;
+  late final _auth = FirebaseAuth.instance;
+
   bool hasSpecialCharacters = false;
   bool hasNumber = false;
   bool hasMinLength = false;
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =
@@ -57,6 +72,30 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   bool isLookingRight = false;
   bool isLookingLeft = false;
+
+  @override
+  void initState() {
+    controllerIdle = SimpleAnimation(Animations.idle.name);
+    controllerHandsUp = SimpleAnimation(Animations.Hands_up.name);
+    controllerHandsDown = SimpleAnimation(Animations.hands_down.name);
+    controllerSuccess = SimpleAnimation(Animations.success.name);
+    controllerFail = SimpleAnimation(Animations.fail.name);
+    controllerLookDownRight = SimpleAnimation(Animations.Look_down_right.name);
+    controllerLookDownLeft = SimpleAnimation(Animations.Look_down_left.name);
+    rootBundle.load('assets/login_animation.riv').then((data) {
+      final file = RiveFile.import(data);
+      final artboard = file.mainArtboard;
+      artboard.addController(controllerIdle);
+      setState(() {
+        riveArtboard = artboard;
+      });
+    });
+    super.initState();
+    setupPasswordControllerListener();
+    checkForPasswordFocused();
+    checkForPasswordConfirmationFocused();
+  }
+
   void removeAllControllers() {
     final listOfControllers = [
       controllerIdle,
@@ -133,30 +172,6 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     });
   }
 
-  @override
-  void initState() {
-    controllerIdle = SimpleAnimation(Animations.idle.name);
-    controllerHandsUp = SimpleAnimation(Animations.Hands_up.name);
-    controllerHandsDown = SimpleAnimation(Animations.hands_down.name);
-    controllerSuccess = SimpleAnimation(Animations.success.name);
-    controllerFail = SimpleAnimation(Animations.fail.name);
-    controllerLookDownRight =
-        SimpleAnimation(Animations.Look_down_right.name);
-    controllerLookDownLeft = SimpleAnimation(Animations.Look_down_left.name);
-    rootBundle.load('assets/login_animation.riv').then((data) {
-      final file = RiveFile.import(data);
-      final artboard = file.mainArtboard;
-      artboard.addController(controllerIdle);
-      setState(() {
-        riveArtboard = artboard;
-      });
-    });
-    super.initState();
-    setupPasswordControllerListener();
-    checkForPasswordFocused();
-    checkForPasswordConfirmationFocused();
-  }
-
   void setupPasswordControllerListener() {
     passwordController.addListener(() {
       setState(() {
@@ -170,44 +185,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 5,
-            child: riveArtboard != null
-                ? Rive(
-                    fit: BoxFit.cover,
-                    artboard: riveArtboard!,
-                  )
-                : const SizedBox.shrink(),
-          ),
-          emailField(),
-          Gap(18.h),
-          passwordField(),
-          Gap(18.h),
-          passwordConfirmationField(),
-          forgetPasswordTextButton(context),
-          Gap(5.h),
-          PasswordValidations(
-            hasLowerCase: hasLowercase,
-            hasUpperCase: hasUppercase,
-            hasSpecialCharacters: hasSpecialCharacters,
-            hasNumber: hasNumber,
-            hasMinLength: hasMinLength,
-          ),
-          Gap(10.h),
-          loginOrSignUpButton(context),
-        ],
-      ),
-    );
-  }
-
   Widget forgetPasswordTextButton(BuildContext context) {
-    if (widget.isSignUpPage == null) {
+    if (widget.isSignUpPage == null && widget.isPasswordPage == null) {
       return TextButton(
         onPressed: () {
           context.pushNamed(Routes.forgetScreen);
@@ -225,11 +204,15 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     }
   }
 
-  Widget loginOrSignUpButton(BuildContext context) {
-    if (widget.isSignUpPage == null) {
-      return loginButton(context);
-    } else {
+  loginOrSignUpOrPasswordButton(BuildContext context) {
+    if (widget.isSignUpPage == true) {
       return signUpButton(context);
+    }
+    if (widget.isSignUpPage == null && widget.isPasswordPage == null) {
+      return loginButton(context);
+    }
+    if (widget.isPasswordPage == true) {
+      return passwordButton(context);
     }
   }
 
@@ -242,12 +225,14 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         passwordConfirmationFocuseNode.unfocus();
         if (formKey.currentState!.validate()) {
           try {
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            await _auth.createUserWithEmailAndPassword(
               email: emailController.text,
               password: passwordController.text,
             );
-            await FirebaseAuth.instance.currentUser!.sendEmailVerification();
-            await FirebaseAuth.instance.signOut();
+            await _auth.currentUser!.updateDisplayName(nameController.text);
+            await _auth.currentUser!.sendEmailVerification();
+
+            await _auth.signOut();
             if (!context.mounted) return;
 
             await AwesomeDialog(
@@ -259,7 +244,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
             ).show();
 
             addSuccessController();
-            Future.delayed(const Duration(seconds: 2));
+            await Future.delayed(const Duration(seconds: 2));
             removeAllControllers();
             if (!context.mounted) return;
 
@@ -313,13 +298,13 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
         if (formKey.currentState!.validate()) {
           try {
-            final c = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            final c = await _auth.signInWithEmailAndPassword(
               email: emailController.text,
               password: passwordController.text,
             );
             if (c.user!.emailVerified) {
               addSuccessController();
-              Future.delayed(const Duration(seconds: 2));
+              await Future.delayed(const Duration(seconds: 2));
               removeAllControllers();
               if (!context.mounted) return;
 
@@ -328,7 +313,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                 predicate: (route) => false,
               );
             } else {
-              await FirebaseAuth.instance.signOut();
+              await _auth.signOut();
               addFailController();
               if (!context.mounted) return;
 
@@ -337,7 +322,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                 dialogType: DialogType.info,
                 animType: AnimType.rightSlide,
                 title: 'Email Not Verified',
-                desc: 'Verify your email check inbox.',
+                desc: 'Please check your email and verify your email.',
               ).show();
             }
           } on FirebaseAuthException catch (e) {
@@ -356,7 +341,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                 context: context,
                 dialogType: DialogType.error,
                 animType: AnimType.rightSlide,
-                title: 'FireBase Error',
+                title: 'Error',
                 desc: 'Wrong password provided for that user.',
               ).show();
             } else {
@@ -364,7 +349,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                 context: context,
                 dialogType: DialogType.error,
                 animType: AnimType.rightSlide,
-                title: 'FireBase Error',
+                title: 'Error',
                 desc: e.message,
               ).show();
             }
@@ -374,24 +359,140 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     );
   }
 
-  AppTextFormField emailField() {
-    return AppTextFormField(
-      hint: 'Email',
-      onChanged: (value) {
-        if (value.isNotEmpty && value.length <= 13 && !isLookingLeft) {
-          addDownLeftController();
-        } else if (value.isNotEmpty && value.length > 13 && !isLookingRight) {
-          addDownRightController();
+  AppTextButton passwordButton(BuildContext context) {
+    return AppTextButton(
+      buttonText: 'Create Password',
+      textStyle: TextStyles.font16White600Weight,
+      onPressed: () async {
+        passwordFocuseNode.unfocus();
+        passwordConfirmationFocuseNode.unfocus();
+        if (formKey.currentState!.validate()) {
+          try {
+            await _auth.createUserWithEmailAndPassword(
+              email: widget.googleUser!.email,
+              password: passwordController.text,
+            );
+
+            await _auth.currentUser!.linkWithCredential(widget.credential!);
+            await _auth.currentUser!
+                .updateDisplayName(widget.googleUser!.displayName);
+            await _auth.currentUser!
+                .updatePhotoURL(widget.googleUser!.photoUrl);
+            if (!context.mounted) return;
+            await AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              title: 'Sign up Success',
+              desc: 'You have successfully signed up.',
+            ).show();
+
+            addSuccessController();
+            await Future.delayed(const Duration(seconds: 2));
+            removeAllControllers();
+            if (!context.mounted) return;
+
+            context.pushNamedAndRemoveUntil(
+              Routes.homeScreen,
+              predicate: (route) => false,
+            );
+          } on FirebaseAuthException catch (e) {
+            addFailController();
+
+            if (e.code == 'email-already-in-use') {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                animType: AnimType.rightSlide,
+                title: 'Error',
+                desc:
+                    'This account already exists for that email go and login.',
+              ).show();
+            } else {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                animType: AnimType.rightSlide,
+                title: 'Error',
+                desc: e.message,
+              ).show();
+            }
+          } catch (e) {
+            addFailController();
+
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.error,
+              animType: AnimType.rightSlide,
+              title: 'Error',
+              desc: e.toString(),
+            ).show();
+          }
         }
       },
-      validator: (value) {
-        if (value == null || value.isEmpty || !AppRegex.isEmailValid(value)) {
-          addFailController();
-          return 'Please enter a valid email';
-        }
-      },
-      controller: emailController,
     );
+  }
+
+  Widget emailField() {
+    if (widget.isPasswordPage == null) {
+      return Column(
+        children: [
+          AppTextFormField(
+            hint: 'Email',
+            onChanged: (value) {
+              if (value.isNotEmpty && value.length <= 13 && !isLookingLeft) {
+                addDownLeftController();
+              } else if (value.isNotEmpty &&
+                  value.length > 13 &&
+                  !isLookingRight) {
+                addDownRightController();
+              }
+            },
+            validator: (value) {
+              if (value == null ||
+                  value.isEmpty ||
+                  !AppRegex.isEmailValid(value)) {
+                addFailController();
+                return 'Please enter a valid email';
+              }
+            },
+            controller: emailController,
+          ),
+          Gap(18.h),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget nameField() {
+    if (widget.isSignUpPage == true) {
+      return Column(
+        children: [
+          AppTextFormField(
+            hint: 'Name',
+            onChanged: (value) {
+              if (value.isNotEmpty && value.length <= 13 && !isLookingLeft) {
+                addDownLeftController();
+              } else if (value.isNotEmpty &&
+                  value.length > 13 &&
+                  !isLookingRight) {
+                addDownRightController();
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty || value.startsWith(' ')) {
+                addFailController();
+                return 'Please enter a valid name';
+              }
+            },
+            controller: nameController,
+          ),
+          Gap(18.h),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   AppTextFormField passwordField() {
@@ -430,41 +531,79 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   }
 
   Widget passwordConfirmationField() {
-    if (widget.isSignUpPage == null) {
-      return const SizedBox.shrink();
-    }
-    return AppTextFormField(
-      focusNode: passwordConfirmationFocuseNode,
-      controller: passwordConfirmationController,
-      hint: 'Password Confirmation',
-      isObscureText: isObscureText,
-      suffixIcon: GestureDetector(
-        onTap: () {
-          setState(() {
-            if (isObscureText) {
-              isObscureText = false;
-              addHandsDownController();
-            } else {
-              addHandsUpController();
-              isObscureText = true;
-            }
-          });
-        },
-        child: Icon(
-          isObscureText ? Icons.visibility_off : Icons.visibility,
+    if (widget.isSignUpPage == true || widget.isPasswordPage == true) {
+      return AppTextFormField(
+        focusNode: passwordConfirmationFocuseNode,
+        controller: passwordConfirmationController,
+        hint: 'Password Confirmation',
+        isObscureText: isObscureText,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            setState(() {
+              if (isObscureText) {
+                isObscureText = false;
+                addHandsDownController();
+              } else {
+                addHandsUpController();
+                isObscureText = true;
+              }
+            });
+          },
+          child: Icon(
+            isObscureText ? Icons.visibility_off : Icons.visibility,
+          ),
         ),
+        validator: (value) {
+          if (value != passwordController.text) {
+            addFailController();
+
+            return 'Enter a matched passwords';
+          }
+          if (value == null ||
+              value.isEmpty ||
+              !AppRegex.isPasswordValid(value)) {
+            addFailController();
+            return 'Please enter a valid password';
+          }
+        },
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 5,
+            child: riveArtboard != null
+                ? Rive(
+                    fit: BoxFit.cover,
+                    artboard: riveArtboard!,
+                  )
+                : const SizedBox.shrink(),
+          ),
+          nameField(),
+          emailField(),
+          passwordField(),
+          Gap(18.h),
+          passwordConfirmationField(),
+          forgetPasswordTextButton(context),
+          Gap(10.h),
+          PasswordValidations(
+            hasLowerCase: hasLowercase,
+            hasUpperCase: hasUppercase,
+            hasSpecialCharacters: hasSpecialCharacters,
+            hasNumber: hasNumber,
+            hasMinLength: hasMinLength,
+          ),
+          Gap(20.h),
+          loginOrSignUpOrPasswordButton(context),
+        ],
       ),
-      validator: (value) {
-        if (value != passwordController.text) {
-          return 'Enter a matched password';
-        }
-        if (value == null ||
-            value.isEmpty ||
-            !AppRegex.isPasswordValid(value)) {
-          addFailController();
-          return 'Please enter a valid password';
-        }
-      },
     );
   }
 
@@ -473,6 +612,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     passwordController.dispose();
     passwordConfirmationController.dispose();
     emailController.dispose();
+    nameController.dispose();
     removeAllControllers();
     controllerIdle.dispose();
     controllerHandsUp.dispose();
