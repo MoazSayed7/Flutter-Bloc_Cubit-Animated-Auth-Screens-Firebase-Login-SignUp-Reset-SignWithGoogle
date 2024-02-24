@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -15,38 +16,49 @@ class ForgetScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 30.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 25),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Reset',
-                          style: TextStyles.font24Blue700Weight,
+          padding:
+              EdgeInsets.only(left: 30.w, right: 30.w, bottom: 15.h, top: 5.h),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Reset',
+                              style: TextStyles.font24Blue700Weight,
+                            ),
+                            Gap(10.h),
+                            Text(
+                              "Enter email to reset password",
+                              style: TextStyles.font14Grey400Weight,
+                            ),
+                          ],
                         ),
-                        Gap(10.h),
-                        Text(
-                          "Enter email to reset password",
-                          style: TextStyles.font14Grey400Weight,
-                        ),
-                      ],
-                    ),
+                      ),
+                      Gap(20.h),
+                      const PasswordReset(),
+                    ],
                   ),
                 ),
-                Gap(20.h),
-                const PasswordReset(),
-                Gap(200.h),
-                const TermsAndConditionsText(),
-                Gap(24.h),
-                const AlreadyHaveAccountText(),
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, // Ensure minimum height
+                  children: [
+                    const TermsAndConditionsText(),
+                    Gap(24.h),
+                    const AlreadyHaveAccountText(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
