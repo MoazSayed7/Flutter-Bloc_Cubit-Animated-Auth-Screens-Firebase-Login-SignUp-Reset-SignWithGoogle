@@ -1,4 +1,5 @@
 # Flutter Animated Login & Signup ( Google or Email/Password) & Reset Password with Firebase Authentication
+
 ## 📷 App Demo
 
 ### SignUp using Email & Password Screen
