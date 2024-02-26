@@ -1,35 +1,62 @@
-# Flutter Animated Login & Signup with Firebase Authentication
-## App Demo
-### Login Screen
+# Flutter Animated Login & Signup ( Google or Email/Password) & Reset Password with Firebase Authentication
+## 📷 App Demo
+
+### SignUp using Email & Password Screen
 <HTML>
     <body>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/031cd2c6-4365-4ba1-87c8-8ce952cecd9a" alt="drawing" style="width:200px;"/>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/5adc8b31-da9d-4b65-b0be-dcf4032bd385" alt="drawing" style="width:200px;"/>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/50cd4170-97f8-4a16-96a9-23c0db7599c5" alt="drawing" style="width:200px;"/>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/0ca36ea3-672c-48cf-b001-f3f5d2edce40" alt="drawing" style="width:200px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/a5c2edec-ed8b-4ca9-b19b-47f625050b0f" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/1d8bb20b-957b-4515-a06a-86854234901a" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/b2f395c2-6c17-431d-b88b-b2266eb02731" alt="drawing" style="width:250px;"/>
+        <br />
+        <br />
+        <br />
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/766b0633-940c-4389-a20a-0b50b77bd3aa" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/4a46846d-96e9-416f-99d3-63e2f08683bc" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/fe07323d-8d10-4ff7-ba92-3c273781acee" alt="drawing" style="width:250px;"/>
     </body>
 </HTML>
 
-### SignUp Screen
+### SignUp using the Google Account Screen ( After Select Account )
+
 <HTML>
     <body>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/ae606354-0034-44c9-b8b7-dbe70c06438c" alt="drawing" style="width:200px;height:400px"/>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/328bbcbd-9284-405c-a054-3b141626e87c" alt="drawing" style="width:200px;"/>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/11870eea-c253-4a60-a48b-69d39a6f4fb2" alt="drawing" style="width:200px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/44c22f64-1b57-442d-a698-65f21d49b2ef" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/ffdbb220-b8d5-4950-8540-af6a8aed0b26" alt="drawing" style="width:250px;"/>
+    </body>
+</HTML>
+
+### Login Screen
+
+<HTML>
+    <body>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/8eaf6102-d774-46ba-99e3-721298b99bf0" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/af5341e6-5984-4b33-8279-346b185f3f4b" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/eb946163-c500-4468-a52b-b75380f7326c" alt="drawing" style="width:250px;"/>
     </body>
 </HTML>
 
 ### Reset Password Screen
 <HTML>
     <body>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/b7a7c732-6e18-419c-92fb-718e64869dc9" alt="drawing" style="width:200px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/82582e57-1c9a-481e-8557-c96c839faa52" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/5095eb08-f8f8-45a7-9fdd-b0dc8b63d177" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/ffabe8df-fb50-4b88-adc1-8dabe3b8d571" alt="drawing" style="width:250px;"/>
     </body>
 </HTML>
 
 ### Home Screen
 <HTML>
     <body>
-        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/9a3ed6ca-ec03-4a96-89b6-a02d537afbf6" alt="drawing" style="width:200px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/d226652c-b53a-45de-b89f-49de482fed78" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/1606acec-256a-4faa-ac06-682fac14fed9" alt="drawing" style="width:250px;"/>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/74c85c9f-a61c-43e7-92f6-5ab5ce472828" alt="drawing" style="width:250px;"/>
+    </body>
+</HTML>
+
+### No Internet Connection Screen
+<HTML>
+    <body>
+        <img src="https://github.com/MoazSayed7/Flutter-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle/assets/75115429/91dee8ab-35cd-4d7c-819e-3d08d2ff4311" alt="drawing" style="width:250px;"/>
     </body>
 </HTML>
 
@@ -86,6 +113,7 @@ Follow these instructions to get the project up and running on your local machin
 - [firebase_auth](https://pub.dev/packages/firebase_auth)
 - [firebase_core](https://pub.dev/packages/firebase_core)
 - [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
+- [flutter_offline](https://pub.dev/packages/flutter_offline)
 - [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter)
 - [gap](https://pub.dev/packages/gap)
 - [google_sign_in](https://pub.dev/packages/google_sign_in)
