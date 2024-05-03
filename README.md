@@ -1,5 +1,6 @@
 [![Stand With Palestine](https://raw.githubusercontent.com/TheBSD/StandWithPalestine/main/banner-no-action.svg)](https://thebsd.github.io/StandWithPalestine)
 
+
 # Flutter Animated Login & Signup ( Google or Email/Password) & Reset Password with Firebase Authentication
 
 ## 📷 App Demo
