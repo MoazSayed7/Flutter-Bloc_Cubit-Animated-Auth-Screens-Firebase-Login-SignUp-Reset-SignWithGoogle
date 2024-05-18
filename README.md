@@ -114,11 +114,13 @@ Follow these instructions to get the project up and running on your local machin
 ## Dependencies
 
 - [awesome_dialog](https://pub.dev/packages/awesome_dialog)
+- [cached_network_image](https://pub.dev/packages/cached_network_image)
 - [firebase_auth](https://pub.dev/packages/firebase_auth)
 - [firebase_core](https://pub.dev/packages/firebase_core)
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
 - [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
 - [flutter_offline](https://pub.dev/packages/flutter_offline)
-- [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter)
+- [flutter_svg](https://pub.dev/packages/flutter_svg)
 - [gap](https://pub.dev/packages/gap)
 - [google_sign_in](https://pub.dev/packages/google_sign_in)
 - [rive](https://pub.dev/packages/rive)
