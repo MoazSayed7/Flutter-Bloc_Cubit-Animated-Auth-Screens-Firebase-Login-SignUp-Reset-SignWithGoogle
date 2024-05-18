@@ -1,6 +1,6 @@
 {
-    "name": "signup_rest_login",
-    "short_name": "signup_rest_login",
+    "name": "auth_bloc",
+    "short_name": "auth_bloc",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

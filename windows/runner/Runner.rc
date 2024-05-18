@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "signup_rest_login" "\0"
+            VALUE "FileDescription", "auth_bloc" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "signup_rest_login" "\0"
+            VALUE "InternalName", "auth_bloc" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "signup_rest_login.exe" "\0"
-            VALUE "ProductName", "signup_rest_login" "\0"
+            VALUE "OriginalFilename", "auth_bloc.exe" "\0"
+            VALUE "ProductName", "auth_bloc" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

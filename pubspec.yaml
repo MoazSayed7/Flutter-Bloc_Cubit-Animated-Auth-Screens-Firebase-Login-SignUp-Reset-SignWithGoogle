@@ -1,4 +1,4 @@
-name: signup_rest_login
+name: auth_bloc
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,10 +16,10 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1+1
+version: 1.5.0+1
 
 environment:
-  sdk: ">=3.2.5 <4.0.0"
+  sdk: ">=3.4.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,21 +28,23 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  awesome_dialog: ^3.2.0
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^4.17.5
-  firebase_core: ^2.25.4
+  awesome_dialog: ^3.2.1
+  cached_network_image: ^3.3.1
+  cupertino_icons: ^1.0.6
+  firebase_auth: ^4.19.5
+  firebase_core: ^2.31.0
   flutter:
     sdk: flutter
-  flutter_screenutil: ^5.9.0
+  flutter_bloc: ^8.1.5
   flutter_offline: ^3.0.1
-  font_awesome_flutter: ^10.7.0
+  flutter_screenutil: ^5.9.1
+  flutter_svg: ^2.0.10+1
   gap: ^3.0.1
   google_sign_in: ^6.2.1
-  rive: ^0.12.4
+  rive: ^0.13.4
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 
@@ -54,10 +56,12 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/login_animation.riv
-  #   - images/a_dot_ham.jpeg
+    - assets/animation/
+    - assets/images/
+    - assets/svgs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

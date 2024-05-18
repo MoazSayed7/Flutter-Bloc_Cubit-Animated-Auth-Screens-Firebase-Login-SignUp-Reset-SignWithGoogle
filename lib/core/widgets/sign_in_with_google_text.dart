@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import '../../theming/styles.dart';
 import '../../helpers/build_divider.dart';
+import '../../theming/styles.dart';
 
 class SigninWithGoogleText extends StatelessWidget {
   const SigninWithGoogleText({

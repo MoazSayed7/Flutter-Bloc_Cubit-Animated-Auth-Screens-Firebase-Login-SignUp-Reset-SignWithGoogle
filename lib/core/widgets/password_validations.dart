@@ -6,35 +6,12 @@ import '../../../theming/colors.dart';
 import '../../../theming/styles.dart';
 
 class PasswordValidations extends StatelessWidget {
-  final bool hasLowerCase;
-  final bool hasUpperCase;
-  final bool hasSpecialCharacters;
-  final bool hasNumber;
   final bool hasMinLength;
-  const PasswordValidations(
-      {super.key,
-      required this.hasLowerCase,
-      required this.hasUpperCase,
-      required this.hasSpecialCharacters,
-      required this.hasNumber,
-      required this.hasMinLength});
+  const PasswordValidations({super.key, required this.hasMinLength});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildValidationRow('At least 1 lowercase letter', hasLowerCase),
-        Gap(2.h),
-        buildValidationRow('At least 1 uppercase letter', hasUpperCase),
-        Gap(2.h),
-        buildValidationRow(
-            'At least 1 special character', hasSpecialCharacters),
-        Gap(2.h),
-        buildValidationRow('At least 1 number', hasNumber),
-        Gap(2.h),
-        buildValidationRow('At least 8 characters', hasMinLength),
-      ],
-    );
+    return buildValidationRow('At least 6 characters', hasMinLength);
   }
 
   Widget buildValidationRow(String text, bool hasValidated) {

@@ -1,16 +1,25 @@
+import '../../../helpers/extensions.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/widgets/already_have_account_text.dart';
+import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/terms_and_conditions_text.dart';
+import '../../../logic/cubit/auth_cubit.dart';
 import '../../../theming/styles.dart';
 import 'widgets/password_reset.dart';
 
-class ForgetScreen extends StatelessWidget {
+class ForgetScreen extends StatefulWidget {
   const ForgetScreen({super.key});
 
+  @override
+  State<ForgetScreen> createState() => _ForgetScreenState();
+}
+
+class _ForgetScreenState extends State<ForgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +51,41 @@ class ForgetScreen extends StatelessWidget {
                         ),
                       ),
                       Gap(20.h),
-                      const PasswordReset(),
+                      BlocConsumer<AuthCubit, AuthState>(
+                        listenWhen: (previous, current) => previous != current,
+                        listener: (context, state) async {
+                          if (state is AuthLoading) {
+                            ProgressIndicaror.showProgressIndicator(context);
+                          } else if (state is AuthError) {
+                            context.pop();
+                            context.pop();
+                            await AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.rightSlide,
+                              title: 'Error',
+                              desc: state.message,
+                            ).show();
+                          } else if (state is ResetPasswordSent) {
+                            context.pop();
+                            context.pop();
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.info,
+                              animType: AnimType.rightSlide,
+                              title: 'Reset Password',
+                              desc:
+                                  'Link to Reset password send to your email, please check inbox messages.',
+                            ).show();
+                          }
+                        },
+                        buildWhen: (previous, current) {
+                          return previous != current;
+                        },
+                        builder: (context, state) {
+                          return const PasswordReset();
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -63,5 +106,12 @@ class ForgetScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    BlocProvider.of<AuthCubit>(context);
   }
 }
